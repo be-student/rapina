@@ -191,7 +191,7 @@ async fn sync_inventory(payload: SyncPayload) -> JobResult { ... }
 
 Every retry waits the same `retry_delay_secs`. The first retry is always immediate regardless of the configured delay.
 
-MySQL expresses retry delays in microseconds, so fractional-second delays retain their configured precision.
+MySQL expresses retry intervals in microseconds. Stored scheduling precision still depends on the column definition: the supplied migration uses `TIMESTAMP` without fractional-second precision, so it does not guarantee subsecond retry timing.
 
 ### No retries
 
@@ -263,7 +263,7 @@ let parsed: JobStatus = "running".parse().unwrap();
 
 ### JobRow
 
-`JobRow` is a plain struct that maps directly to a row in the `rapina_jobs` table. It derives SeaORM's `FromQueryResult` so you can use it with raw queries:
+`JobRow` is a plain struct that maps directly to a row in the `rapina_jobs` table. It implements SeaORM's `FromQueryResult` so you can use it with raw queries:
 
 ```rust
 use rapina::database::{Db, DbError};
