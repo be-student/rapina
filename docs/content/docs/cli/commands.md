@@ -454,7 +454,9 @@ rapina jobs list --failed
 
 This appends a table of failed jobs showing ID, queue, job type, attempt count (`attempts/max_retries`), and the last error message.
 
-Requires the `jobs` feature and a database driver. For PostgreSQL:
+`rapina jobs list` currently supports PostgreSQL and SQLite. It does not yet support MySQL, even though MySQL-backed job storage and workers are supported.
+
+Install the CLI with the `jobs` feature and a matching database driver. For PostgreSQL:
 
 ```bash
 cargo install rapina-cli --features jobs,sea-orm/sqlx-postgres
